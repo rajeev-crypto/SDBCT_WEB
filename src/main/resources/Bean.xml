@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"> 
+
+	<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	
+	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+	  <property name = "url" value = "jdbc:mysql://localhost:3306/sdbct1"/> 
+   <property name = "username" value = "root"/> 
+   <property name = "password" value = "abhi"/> 
+	</bean>
+	
+	<bean id="mysessionfactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	
+	
+	<property name="dataSource" ref="ds"></property>
+  <property name="annotatedClasses">
+  <list>
+  <value>Model.RegisterSM</value>
+  <value>Model.ContactM</value>
+   <value>Model.AntiRagM</value>
+   <value>Model.Student</value>
+   <value>Model.RegisterFM</value>
+    <value>Model.Mst</value>
+     <value>Model.Attendence</value>
+    
+  
+  
+  </list>
+  </property>	
+	<property name="hibernateProperties">
+	<props>
+	
+	     <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+        <prop key="hibernate.show_sql">true</prop>
+        <prop key="hibernate.hbm2ddl.auto">update</prop>
+  
+	
+	</props>
+	
+	
+	
+	</property>
+</bean>
+
+<bean id="htemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+
+<property  name="sessionFactory" ref="mysessionfactory"></property>
+</bean>	
+ 
+ 
+ <!-- daoimpl injection to htemplate -->
+ <bean id="sdao" class="DaoImpl.RegisterSDaoImpl">
+ <property name="hibernateTemplate" ref="htemplate"></property>
+ </bean>
+ 
+ <bean id="cmdao" class="DaoImpl.ContactDaoImpl">
+ <property name="hibernateTemplate" ref="htemplate"></property>
+ </bean>
+ 
+ 
+ <bean id="andao" class="DaoImpl.AntiRagDAoImpl">
+ <property name="hibernateTemplate" ref="htemplate"></property>
+ </bean>
+ 
+ 
+ <bean id="stddao" class="DaoImpl.StudentDaoImpl">
+ <property name="hibernateTemplate" ref="htemplate"></property>
+ </bean>
+ 
+ 
+ 
+ 
+ 
+ <bean id="fmdao" class="DaoImpl.RegisterFDaoImpl">
+ <property name="hibernateTemplate" ref="htemplate"></property>
+ </bean>
+ 
+ 
+ <bean id="msdao" class="DaoImpl.MstDaoImpl">
+ <property name="hibernateTemplate" ref="htemplate"></property>
+ </bean>
+ 
+ 
+ 
+ <bean id="asdao" class="DaoImpl.FeedaDaoImpl">
+ <property name="hibernateTemplate" ref="htemplate"></property>
+ </bean>
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ <!-- service injection -->
+  
+<bean id="service2" class="Services.RegisterSS">
+<property name="rsdimpl" ref="sdao"></property>
+
+</bean>
+
+ 
+ <bean id="service1" class="Services.ContactS">
+<property name="cdiml" ref="cmdao"></property>
+
+</bean>
+
+ <bean id="service4" class="Services.AntiRagS">
+<property name="antimpl" ref="andao"></property>
+
+</bean>
+
+
+ <bean id="service" class="Services.studentS">
+<property name="sdimpl" ref="stddao"></property>
+
+</bean>
+
+<bean id="service3" class="Services.RegisterFS">
+<property name="rdfimpl" ref="fmdao"></property>
+
+</bean>
+
+ 
+ <bean id="service7" class="Services.Msts">
+<property name="mdimpl" ref="msdao"></property>
+
+</bean>
+ 
+ 
+ <bean id="service8" class="Services.Feedas">
+<property name="faimpl" ref="asdao"></property>
+
+</bean>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <!-- model injection -->
+<bean id="rsm" class="Model.RegisterSM">
+  
+  </bean>
+
+ <bean id="cm" class="Model.ContactM">
+  
+  </bean>
+  <bean id="afm" class="Model.AntiRagM">
+  
+  </bean>
+   <bean id="std" class="Model.Student">
+  
+  </bean>
+   <bean id="fm" class="Model.RegisterFM">
+  
+  </bean>
+ 
+ 
+  
+   <bean id="msm" class="Model.Mst">
+  
+  </bean>
+  
+  
+  
+   <bean id="asm" class="Model.Attendence">
+  
+  </bean>
+ 
+ 
+ 
+</beans>
